@@ -1,0 +1,551 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    Python轨迹抽稀 |
+    
+    麻烦桑 BLOG
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="道格拉斯普克算法道格拉斯普克算法通常用于将轨迹保留大致形状的同时，减少轨迹的点个数。也可用来做基于关键点的轨迹分段。 大致原理如下:给定一条轨迹计算切割点：0.定义切割阈值d1.将起点和终点连接起来,构成一条线段a。2.遍历计算除起点终点外所有点到这条直线的距离，直到点到线的距离b≥d，这个点就是需要保留的关键点。以上图为例:这里从点1开始遍历,发现点c到线段a的距离b大于阈值，则c点就为切割垫。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python轨迹抽稀">
+<meta property="og:url" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/index.html">
+<meta property="og:site_name" content="麻烦桑 BLOG">
+<meta property="og:description" content="道格拉斯普克算法道格拉斯普克算法通常用于将轨迹保留大致形状的同时，减少轨迹的点个数。也可用来做基于关键点的轨迹分段。 大致原理如下:给定一条轨迹计算切割点：0.定义切割阈值d1.将起点和终点连接起来,构成一条线段a。2.遍历计算除起点终点外所有点到这条直线的距离，直到点到线的距离b≥d，这个点就是需要保留的关键点。以上图为例:这里从点1开始遍历,发现点c到线段a的距离b大于阈值，则c点就为切割垫。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/1.png">
+<meta property="og:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/2.png">
+<meta property="og:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/3.png">
+<meta property="og:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/4.png">
+<meta property="og:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/5.png">
+<meta property="article:published_time" content="2024-04-10T03:30:03.000Z">
+<meta property="article:modified_time" content="2024-04-10T09:24:34.560Z">
+<meta property="article:author" content="laxfight">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="麻烦桑 BLOG" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/typeface-source-code-pro@1.1.13/index.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="Python轨迹抽稀">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>Python轨迹抽稀</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-Python-gui-ji-chou-xi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/04/10/Python-gui-ji-chou-xi/" class="article-date-link">
+    <time datetime="2024-04-10T03:30:03.000Z" itemprop="datePublished">2024-04-10</time>
+  </a>
+</div>
+
+      
+  <div class="article-category wow slideInLeft">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="道格拉斯普克算法"><a href="#道格拉斯普克算法" class="headerlink" title="道格拉斯普克算法"></a>道格拉斯普克算法</h3><p>道格拉斯普克算法通常用于将轨迹保留大致形状的同时，减少轨迹的点个数。也可用来做基于关键点的轨迹分段。</p>
+<p><strong>大致原理如下:</strong><br>给定一条轨迹<br><img src="/2024/04/10/Python-gui-ji-chou-xi/1.png"><br><strong>计算切割点：</strong><br>0.定义切割阈值d<br>1.将起点和终点连接起来,构成一条线段a。<br>2.遍历计算除起点终点外所有点到这条直线的距离，直到点到线的距离b≥d，这个点就是需要保留的关键点。<br>以上图为例:这里从点1开始遍历,发现点c到线段a的距离b大于阈值，则c点就为切割垫。<br><img src="/2024/04/10/Python-gui-ji-chou-xi/2.png"><br>以c点为切割点，将整个轨迹分为两个子轨迹.<br><img src="/2024/04/10/Python-gui-ji-chou-xi/3.png"><br>对两个子轨迹重复上述操作，若在遍历过程所有点＜d,则只保留起点与终点即可。若发现有点到线的距离≥d,则继续切割。<br><img src="/2024/04/10/Python-gui-ji-chou-xi/4.png"><br><img src="/2024/04/10/Python-gui-ji-chou-xi/5.png"><br><strong>Python代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, x, y</span>):</span><br><span class="line">        self.x = x</span><br><span class="line">        self.y = y</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_point</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.x, self.y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">point_to_line_distance</span>(<span class="params">point: Point, start: Point, end: Point</span>):</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot;点到线的距离</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        point (_type_): 点坐标(x,y)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        start (_type_): 线段的起点 (x,y)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        end (_type_): 线段的终点(x,y)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        float: 点线距离</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    x, y = point.get_point()</span><br><span class="line"></span><br><span class="line">    x1, y1 = start.get_point()</span><br><span class="line"></span><br><span class="line">    x2, y2 = end.get_point()</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">    numerator = <span class="built_in">abs</span>((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1)</span><br><span class="line"></span><br><span class="line">    denominator = ((y2 - y1)**<span class="number">2</span> + (x2 - x1)**<span class="number">2</span>)**<span class="number">0.5</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> denominator==<span class="number">0</span>:</span><br><span class="line"></span><br><span class="line">        distance=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        distance=numerator / denominator</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> distance</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">douglas_peucker</span>(<span class="params">traj, epsilon: <span class="built_in">float</span></span>):</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; 使用道格拉斯-普克算法划分并简化轨迹</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        traj (List[Point]): 轨迹列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        epsilon (float): 控制分割的阈值</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        segmented_trajectories: 每个分割段的原始轨迹列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        simplified_trajectories: 每个分割段的简化轨迹列表    </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(traj) &lt; <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [traj], [traj]</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算轨迹中每个点到直线的距离，并找到距离最大的点</span></span><br><span class="line"></span><br><span class="line">    dmax = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    end = <span class="built_in">len</span>(traj) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, end):</span><br><span class="line"></span><br><span class="line">        d = point_to_line_distance(traj[i], traj[<span class="number">0</span>], traj[end])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> d &gt; dmax:</span><br><span class="line"></span><br><span class="line">            index = i</span><br><span class="line"></span><br><span class="line">            dmax = d</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果最大距离大于阈值，则将轨迹划分为两部分并递归处理</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> dmax &gt; epsilon:</span><br><span class="line"></span><br><span class="line">        part1, simplified_part1 = douglas_peucker(traj[:index + <span class="number">1</span>], epsilon)</span><br><span class="line"></span><br><span class="line">        part2, simplified_part2 = douglas_peucker(traj[index:], epsilon)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> part1 + part2, simplified_part1 + simplified_part2</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对分割后的段进行简化处理</span></span><br><span class="line"></span><br><span class="line">        simplified_traj = [traj[<span class="number">0</span>], traj[end]]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [traj], [simplified_traj]</span><br></pre></td></tr></table></figure>
+<p><strong>Java代码(GPT转译):</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Point</span><span class="params">(<span class="type">double</span> x, <span class="type">double</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DouglasPeuckerAlgorithm</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">pointToLineDistance</span><span class="params">(Point point, Point start, Point end)</span> &#123;</span><br><span class="line">        <span class="type">double</span> <span class="variable">x</span> <span class="operator">=</span> point.getX();</span><br><span class="line">        <span class="type">double</span> <span class="variable">y</span> <span class="operator">=</span> point.getY();</span><br><span class="line">        <span class="type">double</span> <span class="variable">x1</span> <span class="operator">=</span> start.getX();</span><br><span class="line">        <span class="type">double</span> <span class="variable">y1</span> <span class="operator">=</span> start.getY();</span><br><span class="line">        <span class="type">double</span> <span class="variable">x2</span> <span class="operator">=</span> end.getX();</span><br><span class="line">        <span class="type">double</span> <span class="variable">y2</span> <span class="operator">=</span> end.getY();</span><br><span class="line"></span><br><span class="line">        <span class="type">double</span> <span class="variable">numerator</span> <span class="operator">=</span> Math.abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1);</span><br><span class="line">        <span class="type">double</span> <span class="variable">denominator</span> <span class="operator">=</span> Math.sqrt(Math.pow((y2 - y1), <span class="number">2</span>) + Math.pow((x2 - x1), <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        <span class="type">double</span> distance;</span><br><span class="line">        <span class="keyword">if</span> (denominator == <span class="number">0</span>) &#123;</span><br><span class="line">            distance = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            distance = numerator / denominator;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> distance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Point&gt;&gt; <span class="title function_">douglasPeucker</span><span class="params">(List&lt;Point&gt; traj, <span class="type">double</span> epsilon)</span> &#123;</span><br><span class="line">        List&lt;List&lt;Point&gt;&gt; segmentedTrajectories = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        List&lt;List&lt;Point&gt;&gt; simplifiedTrajectories = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (traj.size() &lt; <span class="number">3</span>) &#123;</span><br><span class="line">            segmentedTrajectories.add(traj);</span><br><span class="line">            simplifiedTrajectories.add(traj);</span><br><span class="line">            <span class="keyword">return</span> segmentedTrajectories;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">double</span> <span class="variable">dmax</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> traj.size() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; end; i++) &#123;</span><br><span class="line">            <span class="type">double</span> <span class="variable">d</span> <span class="operator">=</span> pointToLineDistance(traj.get(i), traj.get(<span class="number">0</span>), traj.get(end));</span><br><span class="line">            <span class="keyword">if</span> (d &gt; dmax) &#123;</span><br><span class="line">                index = i;</span><br><span class="line">                dmax = d;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (dmax &gt; epsilon) &#123;</span><br><span class="line">            List&lt;Point&gt; part1 = douglasPeucker(traj.subList(<span class="number">0</span>, index + <span class="number">1</span>), epsilon).get(<span class="number">0</span>);</span><br><span class="line">            List&lt;Point&gt; simplifiedPart1 = douglasPeucker(traj.subList(<span class="number">0</span>, index + <span class="number">1</span>), epsilon).get(<span class="number">1</span>);</span><br><span class="line">            List&lt;Point&gt; part2 = douglasPeucker(traj.subList(index, traj.size()), epsilon).get(<span class="number">0</span>);</span><br><span class="line">            List&lt;Point&gt; simplifiedPart2 = douglasPeucker(traj.subList(index, traj.size()), epsilon).get(<span class="number">1</span>);</span><br><span class="line">            segmentedTrajectories.addAll(part1);</span><br><span class="line">            segmentedTrajectories.addAll(part2);</span><br><span class="line">            simplifiedTrajectories.addAll(simplifiedPart1);</span><br><span class="line">            simplifiedTrajectories.addAll(simplifiedPart2);</span><br><span class="line">            <span class="keyword">return</span> segmentedTrajectories;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            List&lt;Point&gt; simplifiedTraj = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">            simplifiedTraj.add(traj.get(<span class="number">0</span>));</span><br><span class="line">            simplifiedTraj.add(traj.get(end));</span><br><span class="line">            segmentedTrajectories.add(traj);</span><br><span class="line">            simplifiedTrajectories.add(simplifiedTraj);</span><br><span class="line">            <span class="keyword">return</span> simplifiedTrajectories;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://laxfight.github.io/2024/04/10/Python-gui-ji-chou-xi/" data-id="cluun5epv000bw0fc203g0cca" data-title="Python轨迹抽稀" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Python后端构建回顾" class="lazyload">
+          
+        
+        <a href="/2024/04/10/Python-hou-duan-gou-jian-hui-gu/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            Python后端构建回顾
+          
+        </h3>
+      </div>
+    
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF%E6%99%AE%E5%85%8B%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">道格拉斯普克算法</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="laxfight" class="lazyload">
+  <div class="sidebar-author-name">laxfight</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        laxfight
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          1.4k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          00:06
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF%E6%99%AE%E5%85%8B%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">道格拉斯普克算法</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="laxfight" class="lazyload">
+  <div class="sidebar-author-name">laxfight</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+
