@@ -11,7 +11,7 @@
 
   
   <title>
-    归档: 2024/4 |
+    Python Dask 框架 |
     
     麻烦桑 BLOG
   </title>
@@ -25,12 +25,18 @@
   
 <link rel="stylesheet" href="/css/loader.css">
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="麻烦桑 BLOG">
-<meta property="og:url" content="https://laxfight.github.io/archives/2024/04/index.html">
+  <meta name="description" content="dask框架常用包12345daskdask[dataframe]dask[diagnostics]dask[distributed]dask-ml  DASK集群资源设置 通过__main__设置资源  1234567891011121314151617181920def main():    config.set(&amp;#123;        &quot;distributed.worker.m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Dask 框架">
+<meta property="og:url" content="https://laxfight.github.io/2024/04/10/Python-dask-kuang-jia/index.html">
 <meta property="og:site_name" content="麻烦桑 BLOG">
+<meta property="og:description" content="dask框架常用包12345daskdask[dataframe]dask[diagnostics]dask[distributed]dask-ml  DASK集群资源设置 通过__main__设置资源  1234567891011121314151617181920def main():    config.set(&amp;#123;        &quot;distributed.worker.m">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-10T08:50:42.000Z">
+<meta property="article:modified_time" content="2024-09-02T06:52:51.903Z">
 <meta property="article:author" content="laxfight">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="架构">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="麻烦桑 BLOG" type="application/atom+xml">
@@ -157,7 +163,7 @@
 </div>
 <header id="header">
   
-    <img fetchpriority="high" src="/images/banner.jpg" alt="">
+    <img fetchpriority="high" src="/images/banner.jpg" alt="Python Dask 框架">
   
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
@@ -166,7 +172,7 @@
           
           
             <a href="/" id="logo">
-              <h1>归档</h1>
+              <h1>Python Dask 框架</h1>
             </a>
           
         
@@ -183,132 +189,91 @@
 
         <div id="content" class="outer">
           
-          <section id="main">
-<div class="archives-outer-wrap wow fadeInUp">
-  <div class="tag-wrap">
-    
-      <div class="archives-tag-list-item">
-        <a class="archives-tag-list-link" href="/tags/python/">python</a>
-      </div>
-    
-      <div class="archives-tag-list-item">
-        <a class="archives-tag-list-link" href="/tags/架构/">架构</a>
-      </div>
-    
-      <div class="archives-tag-list-item">
-        <a class="archives-tag-list-link" href="/tags/算法/">算法</a>
-      </div>
-    
-      <div class="archives-tag-list-item">
-        <a class="archives-tag-list-link" href="/tags/后端/">后端</a>
-      </div>
-    
+          <section id="main"><article id="post-Python-dask-kuang-jia" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/04/10/Python-dask-kuang-jia/" class="article-date-link">
+    <time datetime="2024-04-10T08:50:42.000Z" itemprop="datePublished">2024-04-10</time>
+  </a>
+</div>
+
+      
+  <div class="article-category wow slideInLeft">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
   </div>
-  <div class="category-wrap">
+
+
+    </div>
+    <div class="hr-line"></div>
     
-      <div class="archives-category-list-item">
-        <a class="archives-category-list-link" href="/categories/技术/">技术</a>
-      </div>
-    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="dask框架常用包"><a href="#dask框架常用包" class="headerlink" title="dask框架常用包"></a>dask框架常用包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dask</span><br><span class="line">dask[dataframe]</span><br><span class="line">dask[diagnostics]</span><br><span class="line">dask[distributed]</span><br><span class="line">dask-ml</span><br></pre></td></tr></table></figure>
+
+<h2 id="DASK集群资源设置"><a href="#DASK集群资源设置" class="headerlink" title="DASK集群资源设置"></a>DASK集群资源设置</h2><blockquote>
+<p>通过__main__设置资源</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    config.<span class="built_in">set</span>(&#123;</span><br><span class="line">        <span class="string">&quot;distributed.worker.memory.target&quot;</span>: <span class="number">0.6</span>,  <span class="comment"># 内存占用到 60% 时开始考虑溢写</span></span><br><span class="line">        <span class="string">&quot;distributed.worker.memory.spill&quot;</span>: <span class="number">0.7</span>,  <span class="comment"># 内存占用到 70% 时开始溢写到磁盘</span></span><br><span class="line">        <span class="string">&quot;distributed.worker.memory.pause&quot;</span>: <span class="number">0.8</span>,  <span class="comment"># 内存占用到 80% 时开始暂停执行新的任务</span></span><br><span class="line">        <span class="string">&quot;distributed.worker.memory.terminate&quot;</span>:</span><br><span class="line">        <span class="number">0.95</span>,  <span class="comment"># 内存占用到 95% 时终止 Worker 以防止 OOM</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment"># 启动Dask集群</span></span><br><span class="line">    <span class="comment"># n_workers表示节点数(通常指宿主机)</span></span><br><span class="line">    <span class="comment"># threads_per_worker表示每个结点的进程数</span></span><br><span class="line">    <span class="comment"># memory_limit表示内存限制</span></span><br><span class="line">    <span class="comment"># 总限制内存=n_workers*memory_limit</span></span><br><span class="line">    cluster = LocalCluster(n_workers=<span class="number">1</span>,</span><br><span class="line">                           threads_per_worker=<span class="number">3</span>,</span><br><span class="line">                           memory_limit=<span class="string">&#x27;6GB&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    client = Client(cluster)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(client)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://laxfight.github.io/2024/04/10/Python-dask-kuang-jia/" data-id="cm0ko1b1600031ofmfclk2rzp" data-title="Python Dask 框架" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84/" rel="tag">架构</a></li></ul>
+
+
+    </footer>
   </div>
   
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Python后端构建回顾" class="lazyload">
+        
+      
+      <a href="/2024/04/10/Python-hou-duan-gou-jian-hui-gu/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          Python后端构建回顾
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
   
-    
-    
-      
-      
-      <section class="archives-wrap wow fadeInUp">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-          <ul>
-            
-            <li class="archive-article">
-  <div class="archive-article-date-wrap">
-    <a href="/2024/04/10/Python-dask-kuang-jia/">
-      <time class="dt-published" datetime="2024-04-10T08:50:42.000Z" itemprop="datePublished">04-10</time>
-    </a>
-  </div>
-  <div class="archive-article-title-wrap">
-    
-      
-        <a class="archive-article-title" href="/2024/04/10/Python-dask-kuang-jia/">Python Dask 框架</a>
-      
-    
-  </div>
-</li>
+</article>
 
-            
-    
-    
-            <li class="archive-article">
-  <div class="archive-article-date-wrap">
-    <a href="/2024/04/10/Python-hou-duan-gou-jian-hui-gu/">
-      <time class="dt-published" datetime="2024-04-10T08:50:42.000Z" itemprop="datePublished">04-10</time>
-    </a>
-  </div>
-  <div class="archive-article-title-wrap">
-    
-      
-        <a class="archive-article-title" href="/2024/04/10/Python-hou-duan-gou-jian-hui-gu/">Python后端构建回顾</a>
-      
-    
-  </div>
-</li>
 
-            
-    
-    
-            <li class="archive-article">
-  <div class="archive-article-date-wrap">
-    <a href="/2024/04/10/Python-kua-mo-kuai-yi-lai-chu-li/">
-      <time class="dt-published" datetime="2024-04-10T08:50:42.000Z" itemprop="datePublished">04-10</time>
-    </a>
-  </div>
-  <div class="archive-article-title-wrap">
-    
-      
-        <a class="archive-article-title" href="/2024/04/10/Python-kua-mo-kuai-yi-lai-chu-li/">Python跨模块依赖处理</a>
-      
-    
-  </div>
-</li>
 
-            
-    
-    
-            <li class="archive-article">
-  <div class="archive-article-date-wrap">
-    <a href="/2024/04/10/Python-gui-ji-chou-xi/">
-      <time class="dt-published" datetime="2024-04-10T03:30:03.000Z" itemprop="datePublished">04-10</time>
-    </a>
-  </div>
-  <div class="archive-article-title-wrap">
-    
-      
-        <a class="archive-article-title" href="/2024/04/10/Python-gui-ji-chou-xi/">Python轨迹抽稀</a>
-      
-    
-  </div>
-</li>
-
-            
-            
-          </ul>
-        </div>
-      </section>
-  
-  </div>
 
 
 
 </section>
           
             <aside id="sidebar">
-  <div class="sidebar-wrap wow fadeInRight ">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
     
-      <div class="sidebar-author">
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dask%E6%A1%86%E6%9E%B6%E5%B8%B8%E7%94%A8%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">dask框架常用包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DASK%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">DASK集群资源设置</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="laxfight" class="lazyload">
   <div class="sidebar-author-name">laxfight</div>
   <div class="sidebar-description"></div>
@@ -357,8 +322,13 @@
     </div>
   
 </div>
-
+</div>
     
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
     
   </div>
 
@@ -417,7 +387,12 @@
       <nav id="mobile-nav">
   <div class="sidebar-wrap">
     
-      <div class="sidebar-author">
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dask%E6%A1%86%E6%9E%B6%E5%B8%B8%E7%94%A8%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">dask框架常用包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DASK%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">DASK集群资源设置</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="laxfight" class="lazyload">
   <div class="sidebar-author-name">laxfight</div>
   <div class="sidebar-description"></div>
@@ -466,9 +441,14 @@
     </div>
   
 </div>
-
+</div>
     
   </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
   
 </nav>
 

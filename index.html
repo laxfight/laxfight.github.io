@@ -187,29 +187,32 @@
   
   <div class="post-wrap-left wow fadeInUp">
     
-      <a class="post-link" href="/2024/04/10/Python-kua-mo-kuai-yi-lai-chu-li/" aria-label="Python跨模块依赖处理"></a>
+      <a class="post-link" href="/2024/04/10/Python-dask-kuang-jia/" aria-label="Python Dask 框架"></a>
     
     
     <div class="post-cover-left">
       
         
         
-          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Python跨模块依赖处理" class="lazyload">
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Python Dask 框架" class="lazyload">
         
       
     </div>
     <div class="post-info">
       <div class="post-meta">
         <span><span class="icon-calendar"></span>2024-04-10</span>
-        <span><span class="icon-pencil"></span>396 字</span>
+        <span><span class="icon-pencil"></span>180 字</span>
         <span><span class="icon-clock"></span>1 分钟</span>
       </div>
-      <h2 class="post-title">Python跨模块依赖处理</h2>
+      <h2 class="post-title">Python Dask 框架</h2>
       <article class="post-article">
         
-          Python跨模块依赖处理总会有些特殊原因导致我们的项目需要跨模块依赖，就拿我这次的项目结构来说
-123456- pyproject	- app #后端模块	- batch #大数据、批处理模块	- script #脚本	- test #测试	- ……
-在项目编写的过程中，app与batch需要频繁地使用某些自定义的算法或程序，且这类算法或程序高度重复，我这里倾向于再写一个模块封装这类算法。但这样处理，会导致在app或batch内import包时,需要使用sys.path.append(“..”)这样的方法导包。不利于解耦。我更倾向于类似maven的处理方式，将子模块打包成jar包跨模块引用。
+          dask框架常用包12345daskdask[dataframe]dask[diagnostics]dask[distributed]dask-ml
+
+DASK集群资源设置
+通过__main__设置资源
+
+1234567891011121314151617181920def main():    config.set(&amp;#123;        &amp;quot;distributed.worker.memory.target&amp;quot;: 0.6,  # 内存占用到 60% 时开始考虑溢写        &amp;quot;distributed.worker.memory.spill&amp;quot;: 0.
         
       </article>
     </div>
@@ -253,10 +256,42 @@
   
   <div class="post-wrap-left wow fadeInUp">
     
-      <a class="post-link" href="/2024/04/10/Python-gui-ji-chou-xi/" aria-label="Python轨迹抽稀"></a>
+      <a class="post-link" href="/2024/04/10/Python-kua-mo-kuai-yi-lai-chu-li/" aria-label="Python跨模块依赖处理"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Python跨模块依赖处理" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-04-10</span>
+        <span><span class="icon-pencil"></span>396 字</span>
+        <span><span class="icon-clock"></span>1 分钟</span>
+      </div>
+      <h2 class="post-title">Python跨模块依赖处理</h2>
+      <article class="post-article">
+        
+          Python跨模块依赖处理总会有些特殊原因导致我们的项目需要跨模块依赖，就拿我这次的项目结构来说
+123456- pyproject	- app #后端模块	- batch #大数据、批处理模块	- script #脚本	- test #测试	- ……
+在项目编写的过程中，app与batch需要频繁地使用某些自定义的算法或程序，且这类算法或程序高度重复，我这里倾向于再写一个模块封装这类算法。但这样处理，会导致在app或batch内import包时,需要使用sys.path.append(“..”)这样的方法导包。不利于解耦。我更倾向于类似maven的处理方式，将子模块打包成jar包跨模块引用。
+        
+      </article>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="post-wrap-right wow fadeInUp">
+    
+    <a class="post-link" href="/2024/04/10/Python-gui-ji-chou-xi/"></a>
+    
+    <div class="post-cover-right">
       
         
         
@@ -299,7 +334,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">3</div>
+    <div class="sidebar-state-number">4</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -372,10 +407,10 @@
       
         <div>
           <span class="icon-brush"></span>
-          1.4k
+          1.6k
           &nbsp;|&nbsp;
           <span class="icon-coffee"></span>
-          00:06
+          00:07
         </div>
       
       
@@ -408,7 +443,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">3</div>
+    <div class="sidebar-state-number">4</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
